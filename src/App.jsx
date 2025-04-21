@@ -8,7 +8,9 @@ function App() {
   
 
   return (
-   <div className = 'bg-black'></div>
+   <div className = "bg-red-500">
+    <Header></Header>
+   </div>
     
  
     //<LoginPage />
