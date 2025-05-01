@@ -5,6 +5,7 @@ import ProductCard from './components/product-card'
 import Header from './components/header'
 import AdminPage from './pages/adminPage'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import TestPage from './pages/testPage'
 
 function App() {
   
@@ -14,6 +15,7 @@ function App() {
      <Routes path="/*">
        <Route path="/admin/*" element={<AdminPage/>}/>
        <Route path="/login" element={<LoginPage/>}/>
+       <Route path="/testing" element={<TestPage/>}/>
        <Route path="/" element={<h1>Home</h1>}/>
        <Route path="/*" element={<h1>404 Not found</h1>}/>
      </Routes> 
