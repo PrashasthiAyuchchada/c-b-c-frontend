@@ -11,7 +11,7 @@ export default function LoginPage(){
         console.log("password:",password);
         console.log("Login button clicked");
 
-        axios.post("http://localhost:5000/api/user/login",{
+        axios.post(import.meta.env.VITE_BACKEND_URL+"/api/user/login",{
             email: email,
             password: password
         }).then(
