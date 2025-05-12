@@ -3,6 +3,7 @@ import { HiUsers } from "react-icons/hi2";
 import { AiFillProduct } from "react-icons/ai";
 import { FaFileInvoice } from "react-icons/fa6";
 import AdminProductsPage from "./admin/products";
+import AddProductForm from "./admin/addProduct";
 export default function AdminPage() {
 
    return(
@@ -17,7 +18,7 @@ export default function AdminPage() {
                 <Route path= "/users" element={<h1>Users</h1>}/>
                 <Route path="/products" element={<AdminProductsPage/>}/>
                 <Route path="/orders" element={<h1>Orders</h1>}/>
-
+                <Route path="/addProduct" element={<AddProductForm/>}/>
             </Routes>
         </div>
 
