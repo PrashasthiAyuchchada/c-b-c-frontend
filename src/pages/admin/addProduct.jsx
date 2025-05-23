@@ -45,9 +45,12 @@ export default function AddProductForm(){
             promisesArray[i] = promise
             
         }
+
+        try{
+
         const result = await Promise.all(promisesArray)
-        console.log(result)
-        return
+        
+        
 
         const altNamesInArray = altNames.split(",")
         const product = {
@@ -58,31 +61,25 @@ export default function AddProductForm(){
             labeledPrice : labeledPrice,
             description : description,
             stock : stock,
-            images : [
-                "https://picsum.photos/id/102/200/300",
-                "https://picsum.photos/id/103/200/300",
-                "https://picsum.photos/id/104/200/300"
-            ]
+            images : result
 
         }
 
         const token = localStorage.getItem("token")
         console.log(token)
         
-        axios.post(import.meta.env.VITE_BACKEND_URL+"/api/product",product,{
+        await axios
+            .post(import.meta.env.VITE_BACKEND_URL+"/api/product",product,{
             headers : {
                 "Authorization" : "Bearer "+token
-            }
-        }).then(
-            ()=>{
-                toast.success("Product added successfully")
-                navigate("/admin/products")
-            }
-        ).catch(
-            ()=>{
-                toast.error("Product adding failed")
-            }
-        )
+            },
+        })
+        toast.success("Product added succesfully");
+        navigate("/admin/products");
+    }catch(error){
+        console.log(error);
+        toast.error("File upload failed")
+    }
 
 
         toast.success("Form submitted")
