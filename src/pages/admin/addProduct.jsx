@@ -21,6 +21,7 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import mediaUpload from "../../../utils/mediaUpload";
 
 export default function AddProductForm(){
 
@@ -34,7 +35,20 @@ export default function AddProductForm(){
     const [images, setImages] = useState([]);
     const  navigate = useNavigate()
 
-    function handleSubmit(){
+    async function handleSubmit(){
+
+        const promisesArray = []
+
+        for(let i =0; i<images.length; i++){
+
+            const promise = mediaUpload(images[i])
+            promisesArray[i] = promise
+            
+        }
+        const result = await Promise.all(promisesArray)
+        console.log(result)
+        return
+
         const altNamesInArray = altNames.split(",")
         const product = {
             productId : productId,
@@ -146,6 +160,16 @@ export default function AddProductForm(){
                 className="w-[400px] h-[50px] border border-gray-500 rounded-xl text-center m-[5px]" 
                 placeholder="Description"
                 />
+                <input
+                    type="file"
+                    onChange={(e)=>{
+                        setImages(e.target.files)
+                    }}
+                    multiple
+                    className="w-[400px] h-[50px] border border-gray-500 rounded-xl text-center m-[5px]"
+                    placeholder="Product Images"
+                />
+
                  <input 
                    value={stock}
                 onChange={
