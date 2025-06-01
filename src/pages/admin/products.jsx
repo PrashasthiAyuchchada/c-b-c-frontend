@@ -1,10 +1,9 @@
 import axios from "axios";
 import { FaPlus, FaRegTrashAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GrEdit } from "react-icons/gr";
 import toast from "react-hot-toast";
-import loader from "../../components/loader";
 import Loader from "../../components/loader";
 
 
@@ -12,6 +11,7 @@ import Loader from "../../components/loader";
 export default function AdminProductsPage() {
     const [products, setProducts] = useState([]);
     const [loaded, setloaded] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(
         () => {
@@ -89,7 +89,14 @@ export default function AdminProductsPage() {
                                     }
 
                                     } className=" text-[20px] m-[10px] hover:text-red-500 " />
-                                    <GrEdit className="text-[20px]  m-[10px]  hover:text-red-500" />
+                                    <GrEdit onClick={()=>{
+                                        //load edit product form
+                                        navigate("/admin/editProduct",{
+                                            state:product 
+                                            //bringing produts data to navigating page
+                                        })
+
+                                    }} className="text-[20px]  m-[10px]  hover:text-red-500" />
                                 </div>
                             </td>
                         </tr> 
