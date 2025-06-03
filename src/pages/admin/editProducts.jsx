@@ -32,20 +32,20 @@ export default function EditProductForm(){
         
         toast.error("Please select a product to edit")
         window.location.href = "/admin/products"
-        
+         
     }
 
 
 
 
     console.log(locationData)
-    const [productId,setProductId] = useState("");
-    const [name,setName] = useState("");
-    const [altNames,setAltNames] = useState("");
-    const [price,setPrice] = useState("");
-    const [labeledPrice,setLabeledPrice] = useState("");
-    const [description,setDescription] = useState("");
-    const [stock,setStock] = useState("");
+    const [productId,setProductId] = useState(locationData.state.productId);
+    const [name,setName] = useState(locationData.state.name);
+    const [altNames,setAltNames] = useState(locationData.state.altNames.join(","));
+    const [price,setPrice] = useState(locationData.state.price);
+    const [labeledPrice,setLabeledPrice] = useState(locationData.state.labeledPrice);
+    const [description,setDescription] = useState(locationData.state.description);
+    const [stock,setStock] = useState(locationData.state.stock);
     const [images, setImages] = useState([]);
     
 
@@ -62,7 +62,11 @@ export default function EditProductForm(){
 
         try{
 
-        const result = await Promise.all(promisesArray)
+        let result = await Promise.all(promisesArray)
+
+        if(images.length == 0){
+            result = locationData.state.images
+        }
         
         
 
@@ -83,16 +87,16 @@ export default function EditProductForm(){
         console.log(token)
         
         await axios
-            .post(import.meta.env.VITE_BACKEND_URL+"/api/product",product,{
+            .put(import.meta.env.VITE_BACKEND_URL+"/api/product/"+productId,product, {
             headers : {
-                "Authorization" : "Bearer "+token
+                Authorization : "Bearer "+token,
             },
         })
-        toast.success("Product added succesfully");
+        toast.success("Product updated succesfully");
         navigate("/admin/products");
     }catch(error){
         console.log(error);
-        toast.error("File upload failed")
+        toast.error("File updating failed")
     }
 
 
@@ -104,6 +108,7 @@ export default function EditProductForm(){
             <div className="w-[500px] h-[600px] bg-white rounded-lg shadow-lg flex flex-col items-center">
                 <h1 className="text-3xl font-bold text-gray-700 m-[10px]">EDIT PRODUCT</h1>
                 <input 
+                disabled
                 value={productId}
                 onChange={
                     (e)=>{
